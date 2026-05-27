@@ -1,15 +1,21 @@
 import ApiError from "../utils/ApiError.js";
 import { Project } from "../models/Projects/projectModule.js";
-import jwt from "jsonwebtoken";
 
 
 export const checkProjectRole = (...allowedRoles) => {
 
   return async (req, res, next) => {
-console.log("loggedInUser:", req.loggedInUser);
-console.log("headers:", req.headers.authorization);
-    try {
+//     console.log("AUTH DEBUG:", {
+//   loggedInUser: req.loggedInUser,
+//   authHeader: req.headers.authorization
+// });
 
+    try {
+//        console.log("AUTH DEBUG:", {
+//   loggedInUser: req.loggedInUser,
+//   authHeader: req.headers.authorization
+// });
+        
       // Auth check
       if (!req.loggedInUser) {
         throw new ApiError(401, "Unauthorized");
@@ -37,15 +43,14 @@ console.log("headers:", req.headers.authorization);
       }
 
       // Owner has full access
-    const userId = req.loggedInUser?.id || req.loggedInUser?._id;
+const userId = req.loggedInUser?.id || req.loggedInUser?._id || req.loggedInUser?.email; 
+// console.log("hi",userId)
+if (!userId) 
+  { throw new ApiError(401, "Unauthorized"); } 
 
-if (!userId) {
-  throw new ApiError(401, "Unauthorized");
-}
-
-if (!project.owner) {
+if (!project.owner) { 
   throw new ApiError(500, "Invalid project data");
-}
+ }
 
 if (String(project.owner) === String(userId)) {
   req.project = project;
@@ -55,9 +60,8 @@ if (String(project.owner) === String(userId)) {
 
       // Find member
       const memberEntry = project.members.find(
-        (m) =>
-          m.user.toString() ===
-          req.loggedInUser._id.toString()
+        (member) =>
+          member.user.toString() ===userId.toString()
       );
 
       // Not member
@@ -128,8 +132,12 @@ export const verifyJWT = (req, res, next) => {
     return next(new ApiError(401, "No token"));
   }
 
-  const decoded = jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET_KEY);
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET_KEY);
 
-  req.loggedInUser = decoded;   // MUST exist
-  next();
+    req.loggedInUser = decoded; // now correct shape
+    next();
+  } catch (err) {
+    next(new ApiError(401, "Invalid token"));
+  }
 };

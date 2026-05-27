@@ -5,6 +5,7 @@ import { Project } from "./projectModule.js";
 import { User } from "../User/user.module.js";
 import mongoose from "mongoose";
 import { asyncHandler } from "../../utils/asyncHandler.js";
+//import { JsonWebTokenError } from "jsonwebtoken";
 
 //* Create / Add project 
 export const createProject=asyncHandler(async(req,res)=>{
@@ -113,7 +114,7 @@ export const deleteProject=asyncHandler(async (req, res) => {
   }
 
   // check for project ownership
-  // loggedInUser id must match with project's sellerId
+  // loggedInUser id must match with project's ownerId
   const isOwnerOfProject = project.owner.equals(req.loggedInUser._id);
 
   // if no match, not allowed to delete
@@ -145,6 +146,7 @@ export const archiveProject=asyncHandler(async (req, res) => {
 export const userGetAll=asyncHandler(async(req,res)=>{
   // extract pagination details from req.body
   const input = req.body;
+  //make joi schema
   const userViewProjectListValidationSchema= Joi.object({
     page: Joi.number().integer().required().min(1),
     limit: Joi.number().integer().required().min(1),
@@ -275,4 +277,3 @@ match.owner=req.loggedInUser._id;
   return res.status(200).send( project, "Projects fetched successfully" );
 })
 
-//* Invite Member to project
