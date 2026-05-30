@@ -9,11 +9,17 @@ const app=express();
 
 app.use(express.json());
 
+//User cors for security and to allow cross-origin requests from frontend applications
 app.use(cors());
 
+//Attach Socket.to every request in server.js
+
+//Routes
 app.use("/user",userRoute);
 app.use("/project",projectRoute);
+//TODO! :LEFT?  maintail nested route for task
 app.use("/task",taskRoute);
 
+//Error Handeler
 
 export default app;

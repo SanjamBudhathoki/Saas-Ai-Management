@@ -19,6 +19,7 @@
     "dotenv": "^17.4.2",
     "env-cmd": "^11.0.0",
     "express": "^5.2.1",
+    "ioredis": "^5.11.0",
     "joi": "^18.1.2",
     "jsonwebtoken": "^9.0.3",
     "mongodb": "^7.2.0",
