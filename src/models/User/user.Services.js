@@ -147,8 +147,9 @@ if (updatedValues.password) {
 })
 
 //* Delete services
-export const deleteuser= asyncHandler(async (req, res) => {
+export const deleteUser= asyncHandler(async (req, res) => {
   try {
+    
     if (!req.loggedInUser) {
       return res.status(401).send({ message: "Unauthorized" });
     }
@@ -170,3 +171,4 @@ export const deleteuser= asyncHandler(async (req, res) => {
   }
 }
 )
+

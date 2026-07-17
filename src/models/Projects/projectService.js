@@ -5,7 +5,6 @@ import { Project } from "./projectModule.js";
 import { User } from "../User/user.module.js";
 import mongoose from "mongoose";
 import { asyncHandler } from "../../utils/asyncHandler.js";
-//import { JsonWebTokenError } from "jsonwebtoken";
 
 //* Create / Add project 
 export const createProject=asyncHandler(async(req,res)=>{

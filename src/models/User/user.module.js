@@ -60,3 +60,5 @@ const userSchema = new mongoose.Schema({
 
 // create table(model)
 export const User = mongoose.model("User", userSchema);
+
+

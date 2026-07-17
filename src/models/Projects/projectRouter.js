@@ -38,6 +38,7 @@ return res.status(201).send(projects,"All project fetched");
 
 //* Get all projects of loginUser
 projectRoute.get("/all", isUser,getLogUser); 
+
 //* Get all project for general user
 projectRoute.get("/user/all",isUser,userGetAll);
 
@@ -52,7 +53,7 @@ projectRoute.patch("/:id/archived",isAdmin,checkPlanLimit("admin"),archiveProjec
 
 //!---------------------------------------------------------------------------------------------------------------------------------------------------------
 //?  Invite Member to project
-projectRoute.post("/:projectId/invite",isUser,checkProjectRole("admin"),checkPlanLimit("member"),inviteMember);
+projectRoute.post("/:projectId/invite",isAdmin,checkProjectRole("admin"),checkPlanLimit("member"),inviteMember);
 
 //? Change Member Role 
 projectRoute.put("/:projectId/members/role",isUser,checkProjectRole("admin"),changeMemberRole);

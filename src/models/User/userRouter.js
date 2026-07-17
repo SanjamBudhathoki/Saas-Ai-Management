@@ -3,7 +3,7 @@ import { User } from "./user.module.js";
 import Joi from "joi";
 import bcrypt from "bcrypt";
 import jwt  from "jsonwebtoken";
-import { deleteuser, editUser, loginUser, registerUser } from "./user.Services.js";
+import { deleteUser, editUser, loginUser, registerUser } from "./user.Services.js";
 import { isUser } from "../../middleware/auth.js";
 
 const userRoute=express.Router();
@@ -19,6 +19,10 @@ userRoute.post("/login",loginUser);
 userRoute.put("/edit",isUser,editUser);
 
 // Delete //!left User
-userRoute.delete("/delete",isUser,deleteuser);
+userRoute.delete("/delete",isUser,deleteUser);
+
+//* Forgot Password
+
+//*Reset Password
 
 export default userRoute;

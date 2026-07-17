@@ -7,7 +7,7 @@ const memberSchema= new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    // Per-project role (separate from (UserModule)system-level role on User model)
+    // Role determines permissions within the project
     role: {
       type: String,
       enum: ["admin", "member", "viewer"],

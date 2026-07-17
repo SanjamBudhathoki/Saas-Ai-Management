@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-
+//* done
+//! Ai left
 const taskSchema = new mongoose.Schema(
   {
     title: {
@@ -70,6 +71,13 @@ const taskSchema = new mongoose.Schema(
       },
     },
 
+  comment:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
+      default: null,
+      index: true,
+    },
+  
     // attachments: [attachmentSchema],
 
     // Cached AI summary — saves re-calling API
